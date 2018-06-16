@@ -2,8 +2,10 @@
 
 - Décompressez le contenu du zip dans le repertoire *www* ou *htdocs* selon le serveur que vous utilisez dans un dossier portant le nom *tyketd-test*. Il pourrait en avoir un autre, ca ne poserait aucun problème. C'est juste pour faciliter la tache avec le lien ci-dessous
 - Création de la base de données : appdb dans phpmyadmin ou en ligne de commande selon votre choix.
-- Taper ceci en ligne de commande (veuillez a être situé dans le dossier nommé *API*)
+- Tapez ceci en ligne de commande (veuillez a être situé dans le dossier nommé *API*)
 `php artisan migrate`
+-Tapez ensuite cette commande
+`composer install`
 Celle ci creera les tables
 - Puis tapez la commande
 `php artisan serve`

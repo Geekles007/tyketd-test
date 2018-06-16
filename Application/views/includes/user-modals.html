@@ -1,0 +1,86 @@
+<!-- Add and edit user modal -->
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form name="userForm" ng-submit="saveUser(user, userForm.$valid)">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{action}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="firstname" class="col-form-label">Nom</label>
+                                    <input type="text" name="firstname" class="form-control" ng-model='user.firstname' required id="firstname">
+                                </div>
+                                <div ng-messages="userForm.firstname.$error">
+                                    <div class="ng-message" ng-message="required">Le nom est obligatoire</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="lastname" class="col-form-label">Prénom</label>
+                                    <input type="text" class="form-control" ng-model='user.lastname' id="lastname">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email" class="col-form-label">Email</label>
+                                    <input type="email" name="email" class="form-control" ng-model='user.email' required id="email">
+                                </div>
+                                <div ng-messages="userForm.email.$error">
+                                    <div class="ng-message" ng-message="required">L'email est obligatoire</div>
+                                    <div class="ng-message" ng-message="email">Email incorrect</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="birthday" class="col-form-label">Date de naissance</label>
+                                    <input type="date"name="birthday" class="form-control" ng-model='user.birthday' required id="birthday">
+                                </div>
+                                <div ng-messages="userForm.birthday.$error">
+                                    <div class="ng-message" ng-message="required">La date de naissance est obligatoire</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="control-label">Mot de passe</label>
+                                <input ng-model="user.password" name="password" placeholder="Mot de passe" minlength="6" class="form-control" type="password" required>
+                                <div ng-messages="userForm.password.$error">
+                                    <div class="ng-message" ng-message="required">Le mot de passe est obligatoire</div>
+                                    <div class="ng-message" ng-message="minlength">Mot de passe pas assez long</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="control-label">Confirmer mot de passe</label>
+                                <input ng-model="user.confpassword" name="confpassword" confirm-pwd="user.password" placeholder="Confirmer mot de passe" class="form-control" type="password">
+                                <div ng-messages="userForm.confpassword.$error">
+                                    <div class="ng-message" ng-message="required">Le mot de passe est obligatoire</div>
+                                    <div class="ng-message" ng-message="password">Mots de passe pas égaux</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="photo">Photo</label>
+                            <input type="file" ng-model="user.photo" class="form-control-file" ng-files="setTheFiles($files, 2)" id="photo">
+                        </div>
+                        <div class="form-group">
+                            <img ng-src="../{{user.photo}}" width="150" alt="">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" ng-click="initInfos()" data-dismiss="modal">Annuler</button>
+                    <button type="submit" ng-disabled="userForm.$invalid" class="btn btn-primary">Enregistrer</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

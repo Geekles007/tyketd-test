@@ -1,0 +1,105 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <img ng-src="../{{currentUser.photo}}" width="50" class="rounded-circle" alt=""> &nbsp;
+    <a class="navbar-brand" href="#/articles">{{currentUser.firstname}} {{currentUser.lastname}}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" 
+    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" class="btn btn-primary" data-toggle="modal" data-target="#articleModal">Nouvel article </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" ng-click="editAccount(currentUser)" data-toggle="modal" data-target="#userModal">Mon compte </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" ng-click="logout()">Deconnexion </a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" ng-model="searchArticle" placeholder="Search" aria-label="Search">
+        </form>
+    </div>
+</nav>
+
+<div class="container mtop">
+    <div class="panel rounded">
+        <div class="panel-heading">
+            <div class="pull-left">
+                <h3 class="panel-title">Gestion des <span class="label label-danger">articles</span></h3>
+            </div>
+            <div class="clearfix"></div>
+        </div><!-- /.panel-heading -->
+        <div class="panel-body">
+            <!-- Start datatable -->
+            <div class="row">
+                <div class="col-md-3 col-xs-3 col-sm-3">
+                    <select class="form-control" ng-model="pageChoice" ng-change="getArticles()">
+                        <option value="">Choisir le nombre ligne</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+            </div>
+            <div class="container" style="margin-top:30px;">
+                <div class="row">
+                    <div class="col-sm col-xs col-md" ng-repeat="itemArticle in articles.data | filter : searchArticle">
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" ng-src="../{{itemArticle.photo}}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">{{itemArticle.title}}</h5>
+                                <p class="card-text">{{itemArticle.description}}</p>
+                                <span>{{moment(itemArticle.created_at.date).fromNow()}}</span>
+                                <a class="btn btn-primary" data-toggle="modal" data-target="#articleModal" ng-click="editArticle(itemArticle)">Editer</a>
+                                <a class="btn btn-warning" ng-click="selectedArticle(itemArticle.id)" data-toggle="modal" data-target="#deleteDialog">Supprimer</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="alert alert-warning" ng-hide="articles.data.length > 0">
+                    Aucun resultat
+                </div>
+            </div>
+            
+            <div class="repeater-footer row" style="margin-top:15px;">
+                <div class="repeater-footer-left col-md-6 col-xs-6 col-sm-3">
+                    <div class="repeater-itemization">
+                        <span><span class="repeater-start">1</span> -
+                            <span class="repeater-end">{{articles.meta.per_page}}</span> de
+                            <span class="repeater-count">{{articles.meta.total}}</span> article{{articles.meta.total > 1 ? 's' : ''}}</span>
+    
+                    </div>
+                </div>
+                <div class="repeater-footer-right col-md-6 col-xs-6 col-sm-3" style="">
+                    <div class="repeater-pagination" style="display:flex;flex-direction: row;align-items: center;float:right;">
+                        <button type="button" class="btn btn-default btn-sm repeater-prev" ng-click="selectCurrentPageArticle(currentPage-1)" ng-disabled="currentPage == 1">
+                            <span class="fa fa-chevron-left"></span>
+                            <span class="sr-only">Page précédent</span>
+                        </button>
+                        <label class="page-label" id="myPageLabel">Page</label>
+                        <div class="repeater-primaryPaging active">
+                            <div class="input-group input-append dropdown combobox">
+                                <select class="form-control" ng-model="currentPage" ng-change="selectCurrentPageArticle(currentPage)">
+                                    <option ng-repeat="item in tabs" value="{{item}}">{{item}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <span>de <span class="repeater-pages">{{articles.meta.last_page}}</span></span>
+                        <button type="button" class="btn btn-default btn-sm repeater-next" ng-click="selectCurrentPageArticle(currentPage+1)" ng-disabled="currentPage == articles.meta.last_page">
+                            <span class="fa fa-chevron-right"></span>
+                            <span class="sr-only">Page suivante</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!--/ End datatable -->
+        </div><!-- /.panel-body -->
+    </div><!-- /.panel -->
+</div>
+
+<div ng-include="'views/includes/article-modals.html'"></div>

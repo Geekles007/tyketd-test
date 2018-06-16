@@ -1,0 +1,15 @@
+.mtop{
+    margin-top: 100px;
+}
+
+.no-shadow{
+    box-shadow: none !important;
+}
+
+a{
+    cursor: pointer;
+}
+
+.ng-message{
+    color:red;
+}

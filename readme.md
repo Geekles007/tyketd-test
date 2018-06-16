@@ -4,7 +4,7 @@
 - Création de la base de données : appdb dans phpmyadmin ou en ligne de commande selon votre choix.
 - Tapez ceci en ligne de commande (veuillez a être situé dans le dossier nommé *API*)
 `php artisan migrate`
--Tapez ensuite cette commande
+- Tapez ensuite cette commande
 `composer install`
 Celle ci creera les tables
 - Puis tapez la commande
